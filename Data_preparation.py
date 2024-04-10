@@ -55,3 +55,11 @@ Deniyaya_df.to_csv('Data Sets/Deniyaya.csv')
 Nuwara_Eliya_df.to_csv('Data Sets/Nuwara_Eliya.csv')
 
 # %%
+# check for null values
+print(colombo_df.isnull().sum())
+print(Deniyaya_df.isnull().sum())
+print(Nuwara_Eliya_df.isnull().sum())
+# %%
+# Check for data lenth
+
+# %%
