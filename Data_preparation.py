@@ -38,4 +38,20 @@ print("c" ,c)
 print("d" ,d)
 print("n" ,n)
 # %%
+# Create separate dataframes for each location
+colombo_df = df[df['Location'] == 'Colombo Proper']
+Deniyaya_df = df[df['Location'] == 'Deniyaya, Matara']
+Nuwara_Eliya_df = df[df['Location'] == 'Nuwara Eliya Proper']
 
+# Print the dataframe
+print(colombo_df)
+print(Deniyaya_df)
+print(Nuwara_Eliya_df)
+
+# %%
+# Save the dataframes to csv files
+colombo_df.to_csv('Data Sets/Colombo.csv')
+Deniyaya_df.to_csv('Data Sets/Deniyaya.csv')
+Nuwara_Eliya_df.to_csv('Data Sets/Nuwara_Eliya.csv')
+
+# %%
