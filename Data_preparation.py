@@ -96,7 +96,34 @@ print('Bibile\n',Bibile_df.isnull().sum())
 print('Kurunegala\n',Kurunegala_df.isnull().sum())
 print('Jaffna\n',Jaffna_df.isnull().sum())
 # %%
-# Check for data lenth
+# describe column 'HCHO Value' of each dataframe
+print('Colombo\n',colombo_df['HCHO Value'].describe())
+print('Deniyaya\n',Deniyaya_df['HCHO Value'].describe())
+print('Nuwaraeliya\n',Nuwara_Eliya_df['HCHO Value'].describe())
+print('Kandy\n',Kandy_df['HCHO Value'].describe())
+print('Bibile\n',Bibile_df['HCHO Value'].describe())
+print('Kurunegala\n',Kurunegala_df['HCHO Value'].describe())
+print('Jaffna\n',Jaffna_df['HCHO Value'].describe())
 
 
 # %%
+#filling missing values with mean 'HCHO Value' of each dataframe
+colombo_df['HCHO Value'].fillna(colombo_df['HCHO Value'].mean(), inplace=True)
+Deniyaya_df['HCHO Value'].fillna(Deniyaya_df['HCHO Value'].mean(), inplace=True)
+Nuwara_Eliya_df['HCHO Value'].fillna(Nuwara_Eliya_df['HCHO Value'].mean(), inplace=True)
+Kandy_df['HCHO Value'].fillna(Kandy_df['HCHO Value'].mean(), inplace=True)
+Bibile_df['HCHO Value'].fillna(Bibile_df['HCHO Value'].mean(), inplace=True)
+Kurunegala_df['HCHO Value'].fillna(Kurunegala_df['HCHO Value'].mean(), inplace=True)
+Jaffna_df['HCHO Value'].fillna(Jaffna_df['HCHO Value'].mean(), inplace=True)
+
+# %%
+# check for null values
+print('Colombo\n',colombo_df.isnull().sum())
+print('Deniyaya\n',Deniyaya_df.isnull().sum())
+print('Nuwaraeliya\n',Nuwara_Eliya_df.isnull().sum())
+print('Kandy\n',Kandy_df.isnull().sum())
+print('Bibile\n',Bibile_df.isnull().sum())
+print('Kurunegala\n',Kurunegala_df.isnull().sum())
+print('Jaffna\n',Jaffna_df.isnull().sum())
+# %%
+
