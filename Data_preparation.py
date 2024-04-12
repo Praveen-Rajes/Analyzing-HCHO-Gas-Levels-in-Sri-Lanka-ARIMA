@@ -108,13 +108,7 @@ print('Jaffna\n',Jaffna_df['HCHO Value'].describe())
 
 # %%
 #filling missing values with mean 'HCHO Value' of each dataframe
-colombo_df['HCHO Value'].fillna(colombo_df['HCHO Value'].mean(), inplace=True)
-Deniyaya_df['HCHO Value'].fillna(Deniyaya_df['HCHO Value'].mean(), inplace=True)
-Nuwara_Eliya_df['HCHO Value'].fillna(Nuwara_Eliya_df['HCHO Value'].mean(), inplace=True)
-Kandy_df['HCHO Value'].fillna(Kandy_df['HCHO Value'].mean(), inplace=True)
-Bibile_df['HCHO Value'].fillna(Bibile_df['HCHO Value'].mean(), inplace=True)
-Kurunegala_df['HCHO Value'].fillna(Kurunegala_df['HCHO Value'].mean(), inplace=True)
-Jaffna_df['HCHO Value'].fillna(Jaffna_df['HCHO Value'].mean(), inplace=True)
+
 
 # %%
 # check for null values
@@ -126,4 +120,41 @@ print('Bibile\n',Bibile_df.isnull().sum())
 print('Kurunegala\n',Kurunegala_df.isnull().sum())
 print('Jaffna\n',Jaffna_df.isnull().sum())
 # %%
+
+#plot the kandy HCHO values
+import matplotlib.pyplot as plt
+plt.plot(Kandy_df['HCHO Value'])
+plt.xlabel('Date')
+plt.ylabel('HCHO Value')
+plt.title('Kandy HCHO Values')
+plt.show()
+
+# %%
+print('Kandy\n',Kandy_df.isnull().sum())
+
+# %%
+Kandy_df.head()
+# %%
+#filling missing values with mean 'HCHO Value' of Kandy dataframe
+
+Kandy_df['Date'] = pd.to_datetime(Kandy_df['Date'])
+
+Kandy_df['Filled HCHO values'] = Kandy_df['HCHO Value'].interpolate(method='linear')
+# %%
+print('Kandy\n',Kandy_df.isnull().sum())
+# %%
+import matplotlib.pyplot as plt
+plt.plot(Kandy_df['Filled HCHO values'])
+plt.xlabel('Date')
+plt.ylabel('Filled HCHO values')
+plt.title('Kandy HCHO Values')
+plt.show()
+# %%
+# stationary test on Kandy data
+from statsmodels.tsa.stattools import adfuller
+result = adfuller(Kandy_df['Filled HCHO values'])
+print('ADF Statistic: %f' % result[0])
+print('p-value: %f' % result[1])
+# %%
+# creating time series arima model for Kandy data
 
