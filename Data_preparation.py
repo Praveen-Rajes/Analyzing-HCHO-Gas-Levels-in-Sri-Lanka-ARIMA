@@ -15,6 +15,7 @@ print(df_col_mat_nuw.head())
 print(df_kan.head())
 print(df_mon_kur_jaf.head())
 
+
 #%%
 # Adding Column names
 columns = ['HCHO Value','Location','Date','Next Date']
@@ -135,11 +136,41 @@ print('Kandy\n',Kandy_df.isnull().sum())
 # %%
 Kandy_df.head()
 # %%
-#filling missing values with mean 'HCHO Value' of Kandy dataframe
+#filling missing values with mean 'HCHO Value' of Kandy dataframe using interpolate
 
+#Kandy_df['Filled HCHO values'] = Kandy_df['HCHO Value'].interpolate(method='linear')
+# %%
+#duplication column 'HCHO Value' to 'copy HCHO values'
+Kandy_df['copy HCHO values'] = Kandy_df['HCHO Value']
+# %%
+Kandy_df.head()
+# %%
+
+#check Kandy_df data types
+Kandy_df.dtypes
+
+#%%
+#converting Date column to datetime
 Kandy_df['Date'] = pd.to_datetime(Kandy_df['Date'])
+# %%
+droping = ['Location','Next Date']
+Kandy_df.drop(droping,axis=1,inplace=True)
+#%%
+Kandy_df.head()
+# Using Regression to fill the missing values
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression()
+testdf = Kandy_df[Kandy_df['copy HCHO values'].isnull()==True]
+traindf = Kandy_df[Kandy_df['copy HCHO values'].isnull()==False]
+y = traindf['copy HCHO values']
+traindf.drop("copy HCHO values",axis=1,inplace=True)
+lr.fit(traindf,y)
+testdf.drop("copy HCHO values",axis=1,inplace=True)
+pred = lr.predict(testdf)
+testdf['copy HCHO values']= pred
 
-Kandy_df['Filled HCHO values'] = Kandy_df['HCHO Value'].interpolate(method='linear')
+
+
 # %%
 print('Kandy\n',Kandy_df.isnull().sum())
 # %%
@@ -150,11 +181,29 @@ plt.ylabel('Filled HCHO values')
 plt.title('Kandy HCHO Values')
 plt.show()
 # %%
-# stationary test on Kandy data
+#set date column as index
+Kandy_df.set_index('Date',inplace=True)
+
+#%%
+# importing adfuller
 from statsmodels.tsa.stattools import adfuller
-result = adfuller(Kandy_df['Filled HCHO values'])
-print('ADF Statistic: %f' % result[0])
-print('p-value: %f' % result[1])
+
 # %%
-# creating time series arima model for Kandy data
+def adfuller_test(price):
+    result = adfuller(price)
+    labels = ['ADF Test statistic','p-value','#Lags Used','Number of observations used']
+    for value,label in zip(result,labels):
+        print(label+' : '+str(value))
+    if result[1] < 0.05:
+        print("Not Stationary")
+    else:
+        print("It's stationary")
+
+# %%
+adfuller_test(Kandy_df['Filled HCHO values'][1:])
+# %%
+Kandy_df.head()
+
+# %%
+
 
